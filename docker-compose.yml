@@ -1,9 +1,6 @@
 version: "3"
 services:
   application:
-    build:
-      context: .
-      target: development
     image: devopswthaws58/spring-boot-mysql-app
     ports:
       - "8080:8080"
