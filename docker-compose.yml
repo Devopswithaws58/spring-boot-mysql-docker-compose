@@ -9,17 +9,15 @@ services:
     depends_on:
       - mysqldb
     volumes:
-      - data:/springboot-app/data
+      - /springboot-app/data
   mysqldb:
-    image: mysql:5.9
+    image: mysql:latest
     networks:
       - springboot-db-net
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=sbms
     volumes:
-      - data:/mysql/data
+      - ./app:/var/lib/mysql
 networks:
   springboot-db-net:
-volumes:
-  data: {}
