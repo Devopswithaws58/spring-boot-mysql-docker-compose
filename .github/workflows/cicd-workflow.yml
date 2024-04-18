@@ -1,0 +1,38 @@
+name: CICD
+on:
+    push:
+        branches: [cicd-docker-ec2]
+jobs:
+    build:
+        runs-on: [ubuntu-latest]
+        steps:
+            - name: checkout source
+              uses: actions/checkout@v3
+            - name: checkout java
+              uses: actions/setup-java@v3
+              with:
+                distribution: 'temurin'
+                java-version: '17'
+            - name: build project
+              run: mvn clean package
+            - name: login to docker hub
+              run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
+            - name: build docker image
+              run: docker build -t spring-boot-mysql-docker-compose .
+            - name: tag docker image
+              run: docker tag spring-boot-mysql-docker-compose devopswthaws58/spring-boot-mysql-docker-compose
+            - name: docker image to docker hub
+              run: docker push devopswthaws58/spring-boot-mysql-docker-compose
+    deploy:
+        needs: build
+        runs-on: [aws-ec2]
+        steps:
+          - name: pull image from docker hub
+            run: docker pull devopswthaws58/spring-boot-mysql-docker-compose:latest
+          - name: Check out repository
+            uses: actions/checkout@v4
+          - uses: hoverkraft-tech/compose-action@v1.5.1
+            with:
+                compose-file: "./docker/docker-compose.yml"
+          - name: Docker Compose Actions Workflow
+            run: docker compose up -d

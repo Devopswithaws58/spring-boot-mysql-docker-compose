@@ -1,7 +1,8 @@
 version: '3.8'
 services:
   app: 
-    image: spring-boot-mysql-app
+    container_name: spring-boot-mysql-app
+    image: devopswthaws58/spring-boot-mysql-docker-compose
     networks:
       - springboot-db-net
     ports:
@@ -18,12 +19,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=sbms
     volumes:
-<<<<<<< HEAD
-      - data:/var/lib/mysql
-=======
       - ./app:/var/lib/mysql
->>>>>>> f286ad996477c64312c2c7b56c1e1db9b4e7f8d7
 networks:
   springboot-db-net:
-volumes:
-  data: {}
