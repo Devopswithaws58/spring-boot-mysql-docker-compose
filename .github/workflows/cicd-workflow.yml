@@ -29,7 +29,10 @@ jobs:
         steps:
           - name: pull image from docker hub
             run: docker pull devopswthaws58/spring-boot-mysql-docker-compose:latest
-          - uses: actions/checkout@v4
+          - name: cleanup old checkout
+            run: chmod +w -R ${GITHUB_WORKSPACE}; rm -rf ${GITHUB_WORKSPACE}/*;
+          - name: Check out repository
+            uses: actions/checkout@v4
           - uses: hoverkraft-tech/compose-action@v1.5.1
             with:
                 compose-file: "./docker/docker-compose.yml"
