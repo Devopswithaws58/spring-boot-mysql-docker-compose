@@ -33,5 +33,7 @@ jobs:
           - uses: hoverkraft-tech/compose-action@v1.5.1
             with:
                 compose-file: "./docker/docker-compose.yml"
+          - name: delete old containers
+            run: docker rm -v -f $(docker ps -qa)
           - name: Docker Compose Actions Workflow
             run: docker compose up -d
