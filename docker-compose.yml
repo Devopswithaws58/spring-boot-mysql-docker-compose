@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app: 
+    container_name: spring-boot-mysql-app
     image: devopswthaws58/spring-boot-mysql-docker-compose
     networks:
       - springboot-db-net
