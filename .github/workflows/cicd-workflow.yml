@@ -20,7 +20,7 @@ jobs:
             - name: build docker image
               run: docker build -t spring-boot-mysql-docker-compose .
             - name: docker image to docker hub
-              run: docker push devopswthaws58/spring-boot-mysql-docker-compose:latest
+              run: docker push devopswthaws58/spring-boot-mysql-docker-compose
     deploy:
         needs: build
         runs-on: [aws-ec2]
